@@ -4,6 +4,7 @@ ENV CARGO_HOME=/var/www/node-template/.cargo
 WORKDIR /var/www/node-template
 
 COPY . .
+COPY ./config /var/www/node-template/.cargo
 
 RUN cargo build --release
 

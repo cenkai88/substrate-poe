@@ -7,8 +7,9 @@ COPY . .
 COPY ./config /var/www/node-template/.cargo/config
 
 RUN cargo build --release --config net.git-fetch-with-cli=true -Z sparse-registry
+RUN chmod +x ./entrypoint.sh
 
-ENTRYPOINT ["/var/www/node-template/entrypoint.sh"]
+ENTRYPOINT ["./entrypoint.sh"]
 
 # # Generate key and extract Secret phrase and Account ID
 # RUN ./target/release/node-template key generate --scheme Sr25519 > key_output1.txt && \

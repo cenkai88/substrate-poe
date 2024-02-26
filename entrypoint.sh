@@ -1,3 +1,5 @@
+#!/bin/bash
+
 OUTPUT_AURA=$(./target/release/node-template key generate --scheme Sr25519)
 
 # Extract the secret phrase and account ID
@@ -48,7 +50,9 @@ cat <<EOF > key2.json
 }
 EOF
 
-./target/release/node-template --base-path /home/blockchain --chain ./customSpecRaw.json --port 30333 --ws-port 9945 --rpc-port 9933 --telemetry-url 'wss://telemetry.polkadot.io/submit/ 0' --rpc-cors '*' --rpc-methods Unsafe --name blockchain --validator &
 sleep 10
+./target/release/node-template --base-path ./data --chain ./customSpecRaw.json --port 30333 --ws-port 9945 --rpc-port 9933 --telemetry-url 'wss://telemetry.polkadot.io/submit/ 0' --rpc-cors '*' --rpc-methods Unsafe --name blockchain --validator --bootnodes /ip4/52.82.78.66/tcp/30333/p2p/12D3KooWRJJ1qfwc1komLaYLf3TYRdwT6FkyhF52APdsn5qpxpSo &
+sleep 10
+
 curl http://localhost:9933 -H "Content-Type:application/json;charset=utf-8" -d "@key1.json"
 curl http://localhost:9933 -H "Content-Type:application/json;charset=utf-8" -d "@key2.json"

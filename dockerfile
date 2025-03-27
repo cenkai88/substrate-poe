@@ -1,5 +1,8 @@
 FROM paritytech/ci-linux:production
 
+ENV RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
+ENV RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
+
 ENV CARGO_HOME=/var/www/node-template/.cargo
 WORKDIR /var/www/node-template
 

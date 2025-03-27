@@ -233,3 +233,9 @@ by appending your own. A few useful ones are as follow.
 # Check whether the code is compilable
 ./scripts/docker_run.sh cargo check
 ```
+
+```bash
+docker build -t blockchain .
+docker tag blockchain:latest ingsh2022/blockchain:latest
+docker push ingsh2022/blockchain:latest
+```

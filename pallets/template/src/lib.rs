@@ -27,7 +27,7 @@ pub mod pallet {
 	#[pallet::generate_deposit(pub(super) fn deposit_event)]
 	pub enum Event<T: Config> {
 		/// Event emitted when a claim has been created.
-		ClaimCreated { who: T::AccountId, claim: BoundedVec<u8, T::MaxBytesInHash> },
+		ClaimCreated { who: T::AccountId, claim: BoundedVec<u8, T::MaxBytesInHash>, user_id: BoundedVec<u8, T::MaxBytesInHash>, extra_str: BoundedVec<u8, T::MaxBytesInHash>, now_ts: <T as pallet_timestamp::Config>::Moment },
 		/// Event emitted when a claim is revoked by the owner.
 		ClaimRevoked { who: T::AccountId, claim: BoundedVec<u8, T::MaxBytesInHash> },
 	}
@@ -70,13 +70,13 @@ pub mod pallet {
 			ensure!(!Claims::<T>::contains_key(&claim), Error::<T>::AlreadyClaimed);
 
 			// Get the block number from the FRAME System pallet.
-			let current_block = <frame_system::Pallet<T>>::block_number();
+			// let current_block = <frame_system::Pallet<T>>::block_number();
 
 			// Store the claim with the sender and block number.
-			Claims::<T>::insert(&claim, (&sender, current_block, &user_id, &extra_str, now_ts));
+			// Claims::<T>::insert(&claim, (&sender, current_block, &user_id, &extra_str, now_ts));
 
 			// Emit an event that the claim was created.
-			Self::deposit_event(Event::ClaimCreated { who: sender, claim });
+			Self::deposit_event(Event::ClaimCreated { who: sender, claim, user_id, extra_str, now_ts });
 
 			Ok(().into())
 		}
